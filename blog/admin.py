@@ -15,7 +15,7 @@ class postAdmin(admin.ModelAdmin):
         )
     posturl.short_description = 'post url '
     filter_horizontal = ('categorys',)
-    fields = ( 'title','slug','posturl','thubarahalli','meta_description','body','author','status','categorys', )
+    fields = ( 'title','slug','posturl','thumbnail','meta_description','body','author','status','categorys', )
     readonly_fields = ('posturl',)
 
     list_display = ('slug','title','status','author',)

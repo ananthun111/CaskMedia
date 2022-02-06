@@ -51,7 +51,7 @@ class Post(models.Model):
             }
         }
     )
-    thubarahalli = models.CharField(max_length=250)
+    thumbnail = models.ImageField(upload_to="thumbnail/uploads/",height_field=None, width_field=None)
     meta_description = models.TextField(max_length=200)
     author = models.ForeignKey(User, on_delete= models.CASCADE,related_name='blog_posts')
     updated_on = models.DateTimeField(auto_now= True)
