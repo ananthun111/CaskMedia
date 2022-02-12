@@ -24,4 +24,5 @@ urlpatterns = [
     path('uploadi/',csrf_exempt(views.uploadi) ),
     path('uploadf/',csrf_exempt(views.uploadf) ),
     path('linkfetching/',views.upload_link_view),
+    path('blog/<slug:slug>/', views.PostDetail.as_view(), name='post_detail')
     ]
