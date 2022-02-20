@@ -17,9 +17,17 @@ from django.contrib import admin
 from django.urls import path ,include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.sitemaps import views
+from base.sitemaps import PostSitemap
+
+Sitemaps = {
+    'Post': PostSitemap,
+}
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('sitemap.xml', views.index, {'sitemaps': Sitemaps}, name='django.contrib.sitemaps.views.index'),
+    path('sitemap.xml', views.sitemap, {'sitemaps': Sitemaps}),
     path('',include('blog.urls')),
-    
-]+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    ]

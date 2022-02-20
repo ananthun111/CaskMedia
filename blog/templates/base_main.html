@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="icon" href=" {% block iconblock %}{% static 'assets/img/favicon.ico' %}{% endblock iconblock %} ">
+      {% comment %} page title block {% endcomment %}
+      <title>
+         {% block titleblock %}Caskmedia{% endblock %}
+      </title>
+      {% comment %} Page seo block {% endcomment %}
+      {% block metablock %}
+      <meta name="description" content="">
+      <meta name="author" content="">
+      {% endblock %}
+      {% comment %} css import block {% endcomment %}
+      {% block cssblock %}
+      {% endblock cssblock %}
+   </head>
+	
+   <body>
+   
+      {% block content %}
+         Body content
+      {% endblock %}
+      
+   </body>
+</html>

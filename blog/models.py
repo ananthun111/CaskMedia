@@ -2,6 +2,7 @@ from enum import unique
 from pickle import TRUE
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 from django_editorjs import EditorJsField
 
 
@@ -28,6 +29,10 @@ class Post(models.Model):
     body = EditorJsField(
         editorjs_config={
             "tools":{
+                "Checklist":{
+                    "disabled": True,
+                },
+
                 "Link":{
                     "config":{
                         "endpoint":
@@ -44,6 +49,7 @@ class Post(models.Model):
                     }
                 },
                 "Attaches":{
+                    "disabled": True,
                     "config":{
                         "endpoint":'/uploadf/'
                     }
@@ -65,3 +71,6 @@ class Post(models.Model):
         
     def __str__(self):
         return self.title
+    def get_absolute_url(self):
+        return reverse('post_detail',args=[self.slug])
+    

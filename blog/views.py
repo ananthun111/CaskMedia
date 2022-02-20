@@ -3,6 +3,8 @@ from msilib.schema import tables
 from django.shortcuts import render,redirect,get_object_or_404
 import json
 from django.views import generic
+
+from blog.editorjs import editorjs
 from . import blogconfig
 from django.core.files.storage import default_storage
 from .models import Post,category
@@ -24,61 +26,8 @@ class PostDetail(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['siteconfig'] = blogconfig.Site
-
-        bodey=json.loads(context['object'].body)
-        blocks=bodey['blocks']
-        body=""
-        for block in blocks:
-            if block['type'] == "Header" :
-                header="<h"+str(block['data']['level'])+">"+block['data']['text']+"</h"+str(block['data']['level'])+">"
-                body=body+header
-            elif block['type'] == "Image" :
-                block = block['data']
-                Image='<img class="featured-image img-fluid" src='+"'"+block['file']['url']+"'/>"
-                body=body+Image
-            elif block['type'] == "paragraph" :
-                block = block['data']
-                paragraph="<p>"+block['text']+"</p>"
-                body=body+paragraph
-            elif block['type'] == "Quote" :
-                block = block['data']
-                Quote="<blockquote>"+block['text']+"<figcaption>"+block['caption']+"</figcaption>"+"</blockquote>"
-                body=body+Quote
-            elif block['type'] == "Delimiter" :
-                pass
-            elif block['type'] == "Checklist" :
-                pass
-            elif block['type'] == "List" :
-                pass
-            elif block['type'] == "Raw" :
-                pass
-            elif block['type'] == "Warning" :
-                pass
-            elif block['type'] == "Attaches" :
-                pass
-            elif block['type'] == "Table" :
-                blockdata =block['data']['content']
-                table ="<table class="+"editor-js"+">"
-                table=table+"<thead>"+"<tr>"
-                
-
-                for row in blockdata :
-                    for coloms in row:
-                        print(coloms)
-
-                table=table+"</table>"
-                print(block)
-            elif block['type'] == "Link" :
-                pass
-            elif block['type'] == "Embed" :
-                block = block['data']
-                if block['service'] == "youtube":
-                    embed = "<iframe width="+str(block['width'])+" height="+str(block['height'])+" src="+block['embed']+" title="+block['caption']+" frameborder="+"0"+" allow="+"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"+" allowfullscreen></iframe>"
-                    body=body+embed
-
-        print(type(blocks))
-        print(body)
-
+        bodey=context['object'].body
+        body = editorjs(bodey)
         context['body'] =body
         return context
 

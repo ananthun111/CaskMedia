@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-xbb$y=mr8^^q0(#uj%840v^ok8^+7y84)-w20l$rifpw-qsi7p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -31,17 +31,24 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'base',
     'blog',
     'django_editorjs',
     'cloudinary_storage',
     'cloudinary',
+    
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -119,7 +126,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -133,5 +141,56 @@ CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'caskmedia',
     'API_KEY': '443343179596365',
     'API_SECRET': 'a8dufhr9J3bPpmA8jAmRmFgO-oo'
+}
+
+# JAZZMIN_SETTINGS["show_ui_builder"] = True
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": True,
+    "brand_small_text": False,
+    "brand_colour": False,
+    "accent": "accent-primary",
+    "navbar": "navbar-dark",
+    "no_navbar_border": False,
+    "navbar_fixed": True,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": False,
+    "sidebar": "sidebar-dark-primary",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": True,
+    "sidebar_nav_flat_style": False,
+    "theme": "cerulean",
+    "dark_mode_theme": "darkly",
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-outline-info",
+        "warning": "btn-outline-warning",
+        "danger": "btn-outline-danger",
+        "success": "btn-outline-success"
+    },
+    "actions_sticky_top": False
+}
+JAZZMIN_SETTINGS = {
+    "topmenu_links": [
+
+        # Url that gets reversed (Permissions can be added)
+        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+
+        # external url that opens in a new window (Permissions can be added)
+        {"name": "Support", "url": "https://ananthu.malcod.xyz/", "new_window": True},
+
+        # model admin to link to (Permissions checked against model)
+        {"model": "auth.User"},
+
+        # App with dropdown menu to all its models pages (Permissions checked against models)
+        {"app": "blog"},
+    ],
+    "show_ui_builder": True,
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
