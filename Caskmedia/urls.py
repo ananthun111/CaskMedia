@@ -18,16 +18,27 @@ from django.urls import path ,include
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.sitemaps import views
-from base.sitemaps import PostSitemap
+from base.sitemaps import PostSitemap ,StaticViewSitemap
+from django.views.generic.base import TemplateView
 
-Sitemaps = {
-    'Post': PostSitemap,
+
+
+blogSitemaps = {
+    'static' : StaticViewSitemap,
 }
-
+newssitemaps ={
+    'news': PostSitemap,
+}
+Sitemaps =blogSitemaps.copy()
+Sitemaps.update(newssitemaps)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('sitemap.xml', views.index, {'sitemaps': Sitemaps}, name='django.contrib.sitemaps.views.index'),
-    path('sitemap.xml', views.sitemap, {'sitemaps': Sitemaps}),
+    path('sitemap.xml', views.index, {'sitemaps': Sitemaps}, name='django.contrib.sitemaps.views.index'),
+    path('news/sitemap.xml', views.index, {'sitemaps': newssitemaps,'sitemap_url_name':'django.contrib.sitemaps.views.sitemap.news'}, name='django.contrib.sitemaps.views.index.news'),
+    path('news/sitemap-<section>.xml', views.sitemap, {'sitemaps': newssitemaps,'template_name' : 'newssitemap.xml','content_type':'application/xml'}, name='django.contrib.sitemaps.views.sitemap.news'),
+    path('sitemap-<section>.xml', views.sitemap, {'sitemaps': Sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('',include('blog.urls')),
+    path('',include('base.urls')),
+    path("robots.txt",TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),),
     ]

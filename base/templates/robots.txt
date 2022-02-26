@@ -1,0 +1,5 @@
+User-Agent: *
+Disallow: /private/
+Disallow: /admin/
+Sitemap:/sitemap.xml
+Sitemap:/news/sitemap.xml

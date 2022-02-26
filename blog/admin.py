@@ -10,7 +10,7 @@ class postAdmin(admin.ModelAdmin):
         if obj:
             btn_id = 'copy-helper'
             return mark_safe(f"""
-            <input text="text" id="{btn_id}" value="{obj.get_absolute_url()}" style="position: absolute; top: -10000px">
+            <input text="text" id="{btn_id}" value="blog/{obj.slug}" style="position: absolute; top: -10000px">
             <a href="#" onclick="document.querySelector(\'#{btn_id}\').select(); document.execCommand(\'copy\');" class="addlink">Copy post url to clipboard</a>
             """
             )
@@ -25,12 +25,27 @@ class postAdmin(admin.ModelAdmin):
             return []
 
     filter_horizontal = ('categorys',)
-    fields = ( 'title','slug','posturl','thumbnail','meta_description','body','author','status','categorys','created_on', 'updated_on' )
+
+    fieldsets = (
+        (None, {
+            'fields': ('title','slug', 'thumbnail', 'meta_description',)
+        }),
+        ('blog content', {
+            'classes': ('collapse',),
+            'fields': ('status','body'),
+        }),
+        ('Advanced options', {
+            'classes': ('collapse',),
+            'fields': ('posturl','author', 'categorys','created_on', 'updated_on'),
+        }),
+    )
+
+    
     readonly_fields = ['posturl','created_on', 'updated_on']
     list_display = ('slug','title','status','author',)
     search_fields = ['slug','title',]
     list_filter = ("status",)
-    prepopulated_fields = {'slug': ('title',)}
+    prepopulated_fields = {'slug': ('title',),}
     
 
 admin.site.register(Post,postAdmin)

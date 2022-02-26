@@ -1,11 +1,11 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <link rel="icon" href=" {% block iconblock %}{% static 'assets/img/favicon.ico' %}{% endblock iconblock %} ">
-      
       {% comment %} page title block {% endcomment %}
       <title>
          {% block titleblock %}Caskmedia{% endblock %}
@@ -17,6 +17,10 @@
       {% endblock %}
       {% comment %} css import block {% endcomment %}
       {% block cssblock %}
+         <link href="{% static 'assets/css/bootstrap.min.css' %} " rel="stylesheet">
+         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+         <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+         
       {% endblock cssblock %}
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
    </head>
@@ -24,8 +28,17 @@
    <body>
    
       {% block content %}
-         Body content
-      {% endblock %}
+      {% block navbarblock %}
+         {% include 'components/nav_bar_component.html' %}
+      {% endblock navbarblock %}
+      <div class="container pt-5">
+         {% block maincontent %}
+         {% endblock maincontent %}
+      </div>
+      {% block footer %}
+         {% include 'components/footer.html' %}
+      {% endblock footer %}
+      {% endblock content %}
       
    </body>
 </html>

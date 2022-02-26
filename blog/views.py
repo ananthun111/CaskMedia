@@ -26,8 +26,11 @@ class PostDetail(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['siteconfig'] = blogconfig.Site
-        bodey=context['object'].body
-        body = editorjs(bodey)
+        body=context['object'].body
+        body = editorjs(body)
+        context['siteurl']=context['object'].get_absolute_url()
+        category_recommended = context['object'].categorys.all().values('id')
+        context['recommended']=Post.objects.distinct().values("title","slug","meta_description","thumbnail","author","updated_on").filter(status=1).order_by('-updated_on').filter(categorys__in=category_recommended)[:10]
         context['body'] =body
         return context
 
