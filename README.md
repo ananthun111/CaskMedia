@@ -1,2 +1,3 @@
-"# Hello there" 
-"# this is a basic News reporting portal build with django frame work" 
+Hello there,
+
+this is a basic News reporting portal build with django frame work
